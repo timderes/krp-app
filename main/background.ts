@@ -51,9 +51,7 @@ let mainWindow: BrowserWindow | null = null;
     // Send parsed data to the renderer process
     if (mainWindow) {
       mainWindow.webContents.send("udp-data", {
-        someInteger,
-        someFloat,
-        someString,
+        data: Array.from(data),
       });
     }
   });
