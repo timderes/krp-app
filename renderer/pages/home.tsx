@@ -17,10 +17,20 @@ const Home = () => {
     <>
       {udpData ? (
         <div>
+          {/* 
           <p>
             <strong>UDP Data Received:</strong> {JSON.stringify(udpData)}
-          </p>
+          </p> 
+          */}
           <p>state: {GAME_STATE[udpData.state]}</p>
+
+          {udpData.state !== 0 && (
+            <>
+              <p>rpm: {udpData.kartData.m_iRPM} RPM</p>
+              <p>wTemp: {udpData.kartData.m_fWaterTemperature}°C</p>
+              <p>cTemp: {udpData.kartData.m_fCylinderHeadTemperature}°C</p>
+            </>
+          )}
         </div>
       ) : (
         <p>Waiting for data... Is Kart Racing Pro running?</p>
