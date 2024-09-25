@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type DataPacket from "../types/DataPacket";
+import { GAME_STATE } from "../utils/constants";
 
 const Home = () => {
   const [udpData, setUdpData] = useState<DataPacket | null>(null);
@@ -8,7 +9,6 @@ const Home = () => {
     if (window.electron) {
       window.electron.onUdpData((data) => {
         setUdpData(data);
-        console.info(udpData);
       });
     }
   }, []);
@@ -20,7 +20,7 @@ const Home = () => {
           <p>
             <strong>UDP Data Received:</strong> {JSON.stringify(udpData)}
           </p>
-          <p>state: {udpData.state}</p>
+          <p>state: {GAME_STATE[udpData.state]}</p>
         </div>
       ) : (
         <p>Waiting for data... Is Kart Racing Pro running?</p>
