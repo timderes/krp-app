@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react";
-
-interface UdpData {
-  data: string;
-}
+import type DataPacket from "../types/DataPacket";
 
 const Home = () => {
-  const [udpData, setUdpData] = useState<string | null>(null);
+  const [udpData, setUdpData] = useState<DataPacket | null>(null);
 
   useEffect(() => {
     if (window.electron) {
-      window.electron.onUdpData((data: string) => {
+      window.electron.onUdpData((data) => {
         setUdpData(data);
+        console.info(udpData);
       });
     }
   }, []);
 
   return (
-    <div>
-      <h1>Nextron + UDP</h1>
+    <>
       {udpData ? (
         <div>
           <p>
             <strong>UDP Data Received:</strong> {JSON.stringify(udpData)}
           </p>
+          <p>state: {udpData.state}</p>
         </div>
       ) : (
-        <p>Waiting for UDP data...</p>
+        <p>Waiting for data... Is Kart Racing Pro running?</p>
       )}
-    </div>
+    </>
   );
 };
 
