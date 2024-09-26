@@ -4,7 +4,7 @@ type KartSession = {
   m_iConditions: number; // 0 = sunny; 1 = cloudy; 2 = rainy
   m_fAirTemperature: number; // degrees Celsius
   m_fTrackTemperature: number; // degrees Celsius
-  m_szSetupFileName: string; // ?
+  m_szSetupFileName: string; // current kart setup name
 };
 
 export default KartSession;
