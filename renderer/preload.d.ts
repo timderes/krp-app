@@ -2,7 +2,7 @@ import { IpcHandler } from "../main/preload";
 import type DataPacket from "./types/DataPacket";
 
 export interface ElectronAPI {
-  onUdpData: (callback: (data: DataPacket) => void) => void;
+  onUdpData: (callback: (data: Packet) => void) => void;
 }
 
 declare global {
