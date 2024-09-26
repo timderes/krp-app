@@ -52,6 +52,27 @@ let mainWindow: BrowserWindow | null = null;
     const { nullTerminator, nullTerminatorIndex } =
       extractNullTerminatedString(data);
 
+    switch (nullTerminator) {
+      case "data":
+        //console.info("data")
+        break;
+      case "evnt":
+        console.info("evnt");
+        break;
+      case "lap ": // DO NOT REMOVE THE TRAILING SPACE!
+        console.info("lap ");
+        break;
+      case "sesn":
+        console.info("sesn");
+        break;
+      case "splt":
+        console.info("splt");
+        break;
+      default:
+        console.warn("Unknown Packet Type!", nullTerminator);
+        break;
+    }
+
     // Get the current game state and session time
     let state: number = null;
     let time: number = null;
