@@ -3,6 +3,7 @@ import type DataPacket from "../types/DataPacket";
 import { GAME_STATE } from "../utils/constants";
 import convertMillisecondsToTimer from "../utils/ui/convertMillisecondsToTimer";
 import WaitingForDataOverlay from "../components/overlays/WaitingForDataOverlay";
+import WeatherIcon from "../components/ui/icons/WeatherIcon";
 import {
   Flex,
   NumberFormatter,
@@ -11,13 +12,7 @@ import {
   Stack,
 } from "@mantine/core";
 import convertKartSpeed from "../utils/ui/convertKartSpeed";
-import {
-  IconCloud,
-  IconCloudOff,
-  IconCloudRain,
-  IconSteeringWheel,
-  IconSun,
-} from "@tabler/icons-react";
+import { IconSteeringWheel } from "@tabler/icons-react";
 import SessionPacket from "../types/SessionPacket";
 import LapPacket from "../types/LapPacket";
 import SplitPacket from "../types/SplitPacket";
@@ -52,19 +47,6 @@ const Home = () => {
     }
   }, []);
 
-  const renderWeatherIcon = (weaterState: number) => {
-    switch (weaterState) {
-      case 0:
-        return <IconSun />;
-      case 1:
-        return <IconCloud />;
-      case 2:
-        return <IconCloudRain />;
-      default:
-        <IconCloudOff />;
-    }
-  };
-
   return (
     <>
       {udpData ? (
@@ -77,7 +59,9 @@ const Home = () => {
               <Flex gap="xs">
                 <Flex gap="xs" align="center">
                   Weather:{" "}
-                  {renderWeatherIcon(sessionData.kartSession.m_iConditions)}
+                  <WeatherIcon
+                    weatherState={sessionData.kartSession.m_iConditions}
+                  />
                 </Flex>
                 <p>
                   WeatherTemp:{" "}
