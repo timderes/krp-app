@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type DataPacket from "../types/DataPacket";
 import { GAME_STATE } from "../utils/constants";
 import convertMillisecondsToTimer from "../utils/ui/convertMillisecondsToTimer";
+import WaitingForDataOverlay from "../components/overlays/WaitingForDataOverlay";
 
 const Home = () => {
   const [udpData, setUdpData] = useState<DataPacket | null>(null);
@@ -34,7 +35,7 @@ const Home = () => {
           )}
         </div>
       ) : (
-        <p>Waiting for data... Is Kart Racing Pro running?</p>
+        <WaitingForDataOverlay />
       )}
     </>
   );
