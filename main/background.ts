@@ -42,21 +42,18 @@ let mainWindow: BrowserWindow | null = null;
   udpSocket.on("message", (d) => {
     const data = Buffer.from(d);
 
-    // Get the packet null terminator (eg. `data` or `sesn`)
-    const nullTerminator = extractNullTerminatedString(data);
-
-    // Step 1: Extract the null-terminated string for 'data'
-    let endOfStringIndex = data.indexOf(0);
-    const stringData = data.subarray(0, endOfStringIndex).toString("utf-8");
+    // Extract the null-terminated string and its index from the data packet
+    const { nullTerminator, nullTerminatorIndex } =
+      extractNullTerminatedString(data);
 
     // Get the current game state
-    const state = data[endOfStringIndex + 1];
+    const state = data[nullTerminatorIndex + 1];
 
     // State 0 means the karts stands in the pit... Therefore no data available...
     if (state === 0) {
       if (mainWindow) {
         mainWindow.webContents.send("udp-data", {
-          data: stringData,
+          data: nullTerminator,
           state: state,
           time: null,
           kartData: null,
@@ -65,17 +62,17 @@ let mainWindow: BrowserWindow | null = null;
       return;
     }
 
-    const time = data.readUInt32LE(endOfStringIndex + 5);
+    const time = data.readUInt32LE(nullTerminatorIndex + 5);
 
     // Remaining bytes for kartData
-    const kartDataBytes = data.subarray(endOfStringIndex + 9);
+    const kartDataBytes = data.subarray(nullTerminatorIndex + 9);
 
     // Send parsed data to the renderer process
     if (mainWindow && nullTerminator === "data") {
       const kartData = parseKartData(kartDataBytes);
 
       mainWindow.webContents.send("udp-data", {
-        data: stringData,
+        data: nullTerminator,
         state: state,
         time: time,
         kartData: kartData,
