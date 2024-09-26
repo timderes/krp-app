@@ -22,3 +22,5 @@ export const convertKartSpeed = (
 
   return speedInMeters * MPS_TO_MPH;
 };
+
+export default convertKartSpeed;
