@@ -39,36 +39,47 @@ let mainWindow: BrowserWindow | null = null;
     mainWindow.webContents.openDevTools();
   }
 
+  // Handles the incoming upd packets from the game
   udpSocket.on("message", (d) => {
+    if (!mainWindow) {
+      throw new Error("Main window is not initialized. Unable to send data.");
+    }
+
     const data = Buffer.from(d);
 
     // Extract the null-terminated string and its index from the data packet
+    // All potential packet type strings are defined in the constants file under PACKET_TYPES.
     const { nullTerminator, nullTerminatorIndex } =
       extractNullTerminatedString(data);
 
-    // Get the current game state
-    const state = data[nullTerminatorIndex + 1];
+    // Get the current game state and session time
+    let state: number = null;
+    let time: number = null;
 
-    // State 0 means the karts stands in the pit... Therefore no data available...
-    if (state === 0) {
-      if (mainWindow) {
-        mainWindow.webContents.send("udp-data", {
-          data: nullTerminator,
-          state: state,
-          time: null,
-          kartData: null,
-        });
+    // Only the `data` packet includes this data
+    if (nullTerminator === "data") {
+      state = data[nullTerminatorIndex + 1];
+
+      // Retrieve the session time when the player is driving on the track.
+      if (state !== 0) {
+        time = data.readUInt32LE(nullTerminatorIndex + 5);
       }
-      return;
     }
 
-    const time = data.readUInt32LE(nullTerminatorIndex + 5);
+    // Check if the game state indicates that the karts are in the pit (state = 0)
+    // In this case, valid kart data is not available!
+    if (state === 0) {
+      return mainWindow.webContents.send("udp-data", {
+        data: nullTerminator,
+        state,
+        time,
+        kartData: null,
+      });
+    }
 
-    // Remaining bytes for kartData
     const kartDataBytes = data.subarray(nullTerminatorIndex + 9);
 
-    // Send parsed data to the renderer process
-    if (mainWindow && nullTerminator === "data") {
+    if (nullTerminator === "data") {
       const kartData = parseKartData(kartDataBytes);
 
       mainWindow.webContents.send("udp-data", {
