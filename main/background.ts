@@ -1,7 +1,7 @@
 import path from "path";
-import { app, ipcMain, BrowserWindow } from "electron";
+import { app, BrowserWindow } from "electron";
 import serve from "electron-serve";
-import { createWindow } from "./helpers";
+import { createWindow, extractNullTerminatedString } from "./helpers";
 import * as dgram from "dgram";
 import KartData from "../renderer/types/KartData";
 
@@ -42,6 +42,9 @@ let mainWindow: BrowserWindow | null = null;
   udpSocket.on("message", (d) => {
     const data = Buffer.from(d);
 
+    // Get the packet null terminator (eg. `data` or `sesn`)
+    const nullTerminator = extractNullTerminatedString(data);
+
     // Step 1: Extract the null-terminated string for 'data'
     let endOfStringIndex = data.indexOf(0);
     const stringData = data.subarray(0, endOfStringIndex).toString("utf-8");
@@ -67,11 +70,10 @@ let mainWindow: BrowserWindow | null = null;
     // Remaining bytes for kartData
     const kartDataBytes = data.subarray(endOfStringIndex + 9);
 
-    // Step 5: Parse kartData using defined structure
-    const kartData = parseKartData(kartDataBytes);
-
     // Send parsed data to the renderer process
-    if (mainWindow) {
+    if (mainWindow && nullTerminator === "data") {
+      const kartData = parseKartData(kartDataBytes);
+
       mainWindow.webContents.send("udp-data", {
         data: stringData,
         state: state,

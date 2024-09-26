@@ -1,1 +1,2 @@
-export * from './create-window'
+export * from "./create-window";
+export { extractNullTerminatedString } from "./utils";
