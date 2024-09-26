@@ -5,7 +5,9 @@ import {
   createWindow,
   extractNullTerminatedString,
   parseDataPacket,
+  parseLapPacket,
   parseSessionPacket,
+  parseSplitPacket,
 } from "./helpers";
 import * as dgram from "dgram";
 
@@ -63,13 +65,13 @@ let mainWindow: BrowserWindow | null = null;
         console.info("Event packet received");
         break;
       case "lap ":
-        console.info("Lap packet received");
+        handleLapPacket(data);
         break;
       case "sesn":
         handleSessionPacket(data);
         break;
       case "splt":
-        console.info("Split packet received");
+        handleSplitPacket(data);
         break;
       default:
         console.warn("Unknown Packet Type:", nullTerminator);
@@ -114,11 +116,30 @@ const handleEventPacket = (b: Buffer) => {
 };
 */
 
+const handleLapPacket = (b: Buffer) => {
+  const { lap: nullTerminator, kartLap } = parseLapPacket(b);
+
+  mainWindow.webContents.send("udp-data", {
+    lap: nullTerminator,
+    kartLap: kartLap,
+  });
+};
+
 const handleSessionPacket = (b: Buffer) => {
   const { sesn: nullTerminator, kartSession } = parseSessionPacket(b);
 
   mainWindow.webContents.send("udp-data", {
     sesn: nullTerminator,
     kartSession: kartSession,
+  });
+};
+
+const handleSplitPacket = (b: Buffer) => {
+  const { splt, splitData, split } = parseSplitPacket(b);
+
+  mainWindow.webContents.send("udp-data", {
+    splt,
+    splitData,
+    split,
   });
 };
