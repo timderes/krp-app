@@ -114,7 +114,7 @@ const handleEventPacket = (b: Buffer) => {
 
   mainWindow.webContents.send("udp-data", {
     evnt: nullTerminator,
-    kartData: eventData,
+    eventData: eventData,
   });
 };
 
