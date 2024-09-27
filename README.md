@@ -7,8 +7,7 @@
 ## Features
 
 - Real-time telemetry data display
-- Event, session, lap, and split data streaming (SOON)
-- Customizable display settings (SOON)
+- Event, session, lap, and split data streaming
 
 ## Requirements
 
@@ -56,10 +55,7 @@ delay = 1
 
 ### Enable Session, event, lap and split data
 
-> [!WARNING]  
-> Currently not supported!
-
-To enable the streaming of event, session, lap, and split data, add the following line to your `proxy_udp.ini` file:
+By default, the app will display only kart-related data. To enable the streaming of event, session, lap, and split data, add the following line to your `proxy_udp.ini` file:
 
 ```ini
 info = 1

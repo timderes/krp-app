@@ -5,6 +5,7 @@ import {
   createWindow,
   extractNullTerminatedString,
   parseDataPacket,
+  parseEventPacket,
   parseLapPacket,
   parseSessionPacket,
   parseSplitPacket,
@@ -62,7 +63,7 @@ let mainWindow: BrowserWindow | null = null;
         handleDataPacket(data);
         break;
       case "evnt":
-        console.info("Event packet received");
+        handleEventPacket(data);
         break;
       case "lap ":
         handleLapPacket(data);
@@ -105,16 +106,17 @@ const handleDataPacket = (b: Buffer) => {
   });
 };
 
-/*
 const handleEventPacket = (b: Buffer) => {
-  const { evnt: nullTerminator, eventData } = parseEventPacket(b);
+  const eventData = parseEventPacket(b);
+
+  const { nullTerminator, nullTerminatorIndex } =
+    extractNullTerminatedString(b);
 
   mainWindow.webContents.send("udp-data", {
-    data: nullTerminator,
+    evnt: nullTerminator,
     kartData: eventData,
   });
 };
-*/
 
 const handleLapPacket = (b: Buffer) => {
   const { lap: nullTerminator, kartLap } = parseLapPacket(b);

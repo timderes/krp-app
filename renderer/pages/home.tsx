@@ -16,6 +16,7 @@ import { IconSteeringWheel } from "@tabler/icons-react";
 import SessionPacket from "../types/SessionPacket";
 import LapPacket from "../types/LapPacket";
 import SplitPacket from "../types/SplitPacket";
+import EventPacket from "../types/EventPacket";
 
 const KART_REV_LIMIT = 16000 as const; // TODO: Get value from packet
 
@@ -24,12 +25,16 @@ const Home = () => {
   const [sessionData, setSessionData] = useState<SessionPacket | null>(null);
   const [lapData, setLapData] = useState<LapPacket | null>(null);
   const [splitData, setSplitData] = useState<SplitPacket | null>(null);
+  const [eventData, setEventData] = useState<EventPacket | null>(null);
 
   useEffect(() => {
     if (window.electron) {
       window.electron.onUdpData((data) => {
         if (data.data) {
           setUdpData(data);
+        }
+        if (data.evnt) {
+          setEventData(data);
         }
 
         if (data.sesn) {
@@ -184,6 +189,8 @@ const Home = () => {
           <p>{JSON.stringify(lapData, null, 2)}</p>
 
           <p>{JSON.stringify(splitData, null, 2)}</p>
+
+          <p>{JSON.stringify(eventData, null, 2)}</p>
         </div>
       ) : (
         <WaitingForDataOverlay />
