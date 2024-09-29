@@ -109,8 +109,7 @@ const handleDataPacket = (b: Buffer) => {
 const handleEventPacket = (b: Buffer) => {
   const eventData = parseEventPacket(b);
 
-  const { nullTerminator, nullTerminatorIndex } =
-    extractNullTerminatedString(b);
+  const { nullTerminator } = extractNullTerminatedString(b);
 
   mainWindow.webContents.send("udp-data", {
     evnt: nullTerminator,
