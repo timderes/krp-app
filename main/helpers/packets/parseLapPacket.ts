@@ -1,5 +1,5 @@
 import KartLap from "../../../renderer/types/KartLap";
-import type LapPacket from "../../../renderer/types/LapPacket";
+import type { LapPacket } from "../../../renderer/types/Packet";
 
 import extractNullTerminatedString from "../utils/extractNullTerminatedString";
 

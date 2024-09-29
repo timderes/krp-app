@@ -1,4 +1,4 @@
-import type DataPacket from "../../../renderer/types/DataPacket";
+import type { DataPacket } from "../../../renderer/types/Packet";
 import type KartData from "../../../renderer/types/KartData";
 
 import extractNullTerminatedString from "../utils/extractNullTerminatedString";

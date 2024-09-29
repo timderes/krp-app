@@ -1,4 +1,4 @@
-import type SplitPacket from "../../../renderer/types/SplitPacket";
+import type { SplitPacket } from "../../../renderer/types/Packet";
 import type KartSplit from "../../../renderer/types/KartSplit";
 import extractNullTerminatedString from "../utils/extractNullTerminatedString";
 

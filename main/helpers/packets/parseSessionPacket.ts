@@ -1,5 +1,5 @@
 import type KartSession from "../../../renderer/types/KartSession";
-import SessionPacket from "../../../renderer/types/SessionPacket";
+import type { SessionPacket } from "../../../renderer/types/Packet";
 
 import extractNullTerminatedString from "../utils/extractNullTerminatedString";
 
