@@ -1,5 +1,11 @@
+import Link from "next/link";
+
 const IndexPage = () => {
-  return <>INDEX</>;
+  return (
+    <>
+      <Link href="/liveTelemetry/checkConnection">Live Telemetry</Link>
+    </>
+  );
 };
 
 export default IndexPage;
