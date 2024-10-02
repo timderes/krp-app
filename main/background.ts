@@ -2,6 +2,7 @@ import path from "path";
 import { app, BrowserWindow } from "electron";
 import serve from "electron-serve";
 import {
+  checkGamePaths,
   createWindow,
   extractNullTerminatedString,
   parseDataPacket,
@@ -12,6 +13,7 @@ import {
 } from "./helpers";
 import * as dgram from "dgram";
 import configStore from "./stores/config.store";
+import { showAlert } from "./helpers/utils/checkGamePaths";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -30,11 +32,7 @@ let mainWindow: BrowserWindow | null = null;
 
 (async () => {
   await app.whenReady();
-
-
-  if (!isProd) {
-    configStore.openInEditor();
-  }
+  await checkGamePaths();
 
   mainWindow = createWindow("main", {
     width: 1000,

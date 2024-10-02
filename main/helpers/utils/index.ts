@@ -1,3 +1,4 @@
+import checkGamePaths from "./checkGamePaths";
 import extractNullTerminatedString from "./extractNullTerminatedString";
 
-export { extractNullTerminatedString };
+export { checkGamePaths, extractNullTerminatedString };
