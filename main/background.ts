@@ -11,11 +11,12 @@ import {
   parseSplitPacket,
 } from "./helpers";
 import * as dgram from "dgram";
+import configStore from "./stores/config.store";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const UDP_IP = "127.0.0.1";
-const UDP_PORT = 30001;
+const UDP_IP = configStore.get("ip").split(":")[0] || undefined;
+const UDP_PORT = Number(configStore.get("ip").split(":")[1]) || undefined;
 
 const udpSocket = dgram.createSocket("udp4");
 
@@ -29,6 +30,11 @@ let mainWindow: BrowserWindow | null = null;
 
 (async () => {
   await app.whenReady();
+
+
+  if (!isProd) {
+    configStore.openInEditor();
+  }
 
   mainWindow = createWindow("main", {
     width: 1000,
@@ -80,9 +86,15 @@ let mainWindow: BrowserWindow | null = null;
     }
   });
 
-  udpSocket.bind(UDP_PORT, UDP_IP, () => {
-    console.info(`Listening for UDP packets on ${UDP_IP}:${UDP_PORT}`);
-  });
+  udpSocket.bind(
+    {
+      address: UDP_IP,
+      port: UDP_PORT,
+    },
+    () => {
+      console.info(`Listening for UDP packets on ${UDP_IP}:${UDP_PORT}`);
+    }
+  );
 
   udpSocket.on("error", (err) => {
     console.error(`UDP socket error:\n${err.stack}`);
