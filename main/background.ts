@@ -11,11 +11,12 @@ import {
   parseSplitPacket,
 } from "./helpers";
 import * as dgram from "dgram";
+import { AppSettingsStore } from "./stores/AppSettings";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const UDP_IP = "127.0.0.1";
-const UDP_PORT = 30001;
+const UDP_IP = AppSettingsStore.get("upd_ip");
+const UDP_PORT = AppSettingsStore.get("upd_port");
 
 const udpSocket = dgram.createSocket("udp4");
 
