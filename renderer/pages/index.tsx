@@ -1,12 +1,13 @@
-import { Stack } from "@mantine/core";
-import Link from "next/link";
+import { Container, Title } from "@mantine/core";
+import LayoutWithControls from "../components/layouts/LayoutWithControls";
 
 const IndexPage = () => {
   return (
-    <Stack>
-      <Link href="/liveTelemetry/dashboard">Live Telemetry</Link>
-      <Link href="/settings">Settings</Link>
-    </Stack>
+    <LayoutWithControls>
+      <Container>
+        <Title>KRP Dashboard</Title>
+      </Container>
+    </LayoutWithControls>
   );
 };
 
