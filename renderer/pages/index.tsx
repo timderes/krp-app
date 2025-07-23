@@ -1,10 +1,12 @@
+import { Stack } from "@mantine/core";
 import Link from "next/link";
 
 const IndexPage = () => {
   return (
-    <>
-      <Link href="/liveTelemetry/checkConnection">Live Telemetry</Link>
-    </>
+    <Stack>
+      <Link href="/liveTelemetry/dashboard">Live Telemetry</Link>
+      <Link href="/settings">Settings</Link>
+    </Stack>
   );
 };
 

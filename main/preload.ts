@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
 import type Packet from "../renderer/types/Packet";
+import { AppSettingsStoreType } from "./stores/AppSettings";
 
 const handler = {
   send(channel: string, value: unknown) {
@@ -23,6 +24,12 @@ contextBridge.exposeInMainWorld("electron", {
     ipcRenderer.on("udp-data", (event, data: Packet) => {
       callback(data);
     });
+  },
+  getAppSettings: () => {
+    return ipcRenderer.invoke("get-app-settings");
+  },
+  saveAppSettings: (settings: AppSettingsStoreType) => {
+    ipcRenderer.invoke("save-app-settings", settings);
   },
 });
 

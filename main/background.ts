@@ -1,5 +1,5 @@
 import path from "path";
-import { app, BrowserWindow } from "electron";
+import { app, dialog, BrowserWindow, ipcMain } from "electron";
 import serve from "electron-serve";
 import {
   createWindow,
@@ -143,3 +143,25 @@ const handleSplitPacket = (b: Buffer) => {
     split,
   });
 };
+
+ipcMain.handle("get-app-settings", async () => {
+  return AppSettingsStore.store;
+});
+
+ipcMain.handle("save-app-settings", async (_, settings) => {
+  if (settings) {
+    AppSettingsStore.set(settings);
+  }
+});
+
+ipcMain.on("open-file-picker", (event) => {
+  const filePath = dialog.showOpenDialogSync({
+    properties: ["openDirectory"],
+  });
+
+  if (filePath && filePath.length > 0) {
+    event.sender.send("file-picker-response", filePath[0]);
+  } else {
+    event.sender.send("file-picker-response", null);
+  }
+});

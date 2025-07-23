@@ -2,7 +2,7 @@ import Store from "electron-store";
 import type TemperatureUnit from "../../renderer/types/TemperatureUnit";
 import type SpeedUnit from "../../renderer/types/SpeedUnit";
 
-type AppSettingsStoreType = {
+export type AppSettingsStoreType = {
   upd_ip: string; // IP Address for the game data
   upd_port: number; // UDP Port for the game data
   game_path: string; // Path to the game installation
