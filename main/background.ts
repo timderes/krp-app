@@ -154,9 +154,12 @@ ipcMain.handle("save-app-settings", async (_, settings) => {
   }
 });
 
-ipcMain.on("open-file-picker", (event) => {
+ipcMain.on("open-file-picker", (event, ...args) => {
+  const { path: previousPath } = args[0];
+
   const filePath = dialog.showOpenDialogSync({
     properties: ["openDirectory"],
+    defaultPath: previousPath || app.getPath("home"),
   });
 
   if (filePath && filePath.length > 0) {

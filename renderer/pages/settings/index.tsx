@@ -24,9 +24,9 @@ const SettingsPage = () => {
       upd_port: 0,
       game_path: "",
       save_path: "",
-      default_driver: "",
       temperature_unit: "CELSIUS",
       speed_unit: "KPH",
+      default_driver: "",
     },
     validate: {
       upd_port: (value) =>
@@ -35,13 +35,22 @@ const SettingsPage = () => {
   });
 
   useEffect(() => {
-    window.electron.getAppSettings().then((settings) => {
-      settingsFrom.setValues(settings);
-    });
+    window.electron
+      .getAppSettings()
+      .then((settings) => {
+        settingsFrom.setValues(settings);
+      })
+      .then(() => {
+        settingsFrom.resetDirty();
+        settingsFrom.resetTouched();
+      });
   }, []);
 
   const openFilePicker = (type: "game_path" | "save_path") => {
-    window.ipc.send("open-file-picker", type);
+    window.ipc.send("open-file-picker", {
+      type,
+      path: settingsFrom.values[type] || undefined,
+    });
     const unsubscribe = window.ipc.on(
       "file-picker-response",
       (resultPath: string) => {
@@ -53,6 +62,7 @@ const SettingsPage = () => {
                 : { ...prev, save_path: resultPath }
               : prev
           );
+          settingsFrom.isDirty();
         }
         unsubscribe();
       }
@@ -60,8 +70,9 @@ const SettingsPage = () => {
   };
 
   const saveSettings = () => {
-    console.log("Saving settings:", settingsFrom.values);
     window.electron.saveAppSettings(settingsFrom.values);
+    settingsFrom.resetTouched();
+    settingsFrom.resetDirty();
   };
 
   const goBack = () => router.back();
@@ -112,6 +123,7 @@ const SettingsPage = () => {
                   : prev
               )
             }
+            {...settingsFrom.getInputProps("temperature_unit")}
           />
 
           <Select
@@ -131,6 +143,7 @@ const SettingsPage = () => {
                   : prev
               )
             }
+            {...settingsFrom.getInputProps("speed_unit")}
           />
           <Divider label="Paths" labelPosition="left" />
           <Text opacity={0.8}>
@@ -140,24 +153,32 @@ const SettingsPage = () => {
           <TextInput
             {...settingsFrom.getInputProps("game_path")}
             label="Installation Path"
+            description="The path where the Kart Racing Pro executable is located."
             onClick={() => openFilePicker("game_path")}
+            // Disable typing
+            onKeyDown={(e) => e.preventDefault()}
+            onPaste={(e) => e.preventDefault()}
           />
           <TextInput
             {...settingsFrom.getInputProps("save_path")}
             label="Save Game Path"
+            description="The path where your save games and mods are stored. On Windows this is usually in the Documents folder."
             onClick={() => openFilePicker("save_path")}
+            onKeyDown={(e) => e.preventDefault()}
+            onPaste={(e) => e.preventDefault()}
           />
           <Divider />
           <ButtonGroup>
             <Button
-              disabled={!settingsFrom.isValid()}
+              ml="auto"
+              disabled={!settingsFrom.isDirty() || !settingsFrom.isValid()}
               w="fit-content"
-              onClick={() => saveSettings()}
+              onClick={saveSettings}
             >
               Save Settings
             </Button>
             <Button variant="default" onClick={() => goBack()}>
-              Cancel
+              Back
             </Button>
           </ButtonGroup>
         </Stack>
