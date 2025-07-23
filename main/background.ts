@@ -48,12 +48,10 @@ let mainWindow: BrowserWindow | null = null;
   }
 
   // Handles the incoming upd packets from the game
-  udpSocket.on("message", (d) => {
+  udpSocket.on("message", (data) => {
     if (!mainWindow) {
       throw new Error("Main window is not initialized. Unable to send data.");
     }
-
-    const data = Buffer.from(d);
 
     // Extract the null-terminated string and its index from the data packet
     // All potential packet type strings are defined in the constants file under PACKET_TYPES.
