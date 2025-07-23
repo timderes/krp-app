@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "my-nextron-app",
-  "description": "My application description",
+  "name": "krp-dashboard",
+  "description": "Dashboard and Statistics App for Kart Racing Pro",
   "version": "1.0.0",
-  "author": "Yoshihide Shiono <shiono.yoshihide@gmail.com>",
+  "author": "Tim Deres",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
