@@ -12,14 +12,13 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import type { AppSettingsStoreType } from "../../../main/stores/AppSettings";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
 import LayoutWithControls from "../../components/layouts/LayoutWithControls";
 
 const SettingsPage = () => {
   const router = useRouter();
-  const settingsFrom = useForm<AppSettingsStoreType>({
+  const settingsFrom = useForm<AppSettingsStore>({
     initialValues: {
       upd_ip: "",
       upd_port: 0,
@@ -121,7 +120,7 @@ const SettingsPage = () => {
                     ? {
                         ...prev,
                         temperature_unit:
-                          value as AppSettingsStoreType["temperature_unit"],
+                          value as AppSettingsStore["temperature_unit"],
                       }
                     : prev
                 )
@@ -141,7 +140,7 @@ const SettingsPage = () => {
                   prev
                     ? {
                         ...prev,
-                        speed_unit: value as AppSettingsStoreType["speed_unit"],
+                        speed_unit: value as AppSettingsStore["speed_unit"],
                       }
                     : prev
                 )

@@ -1,6 +1,4 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron";
-import type Packet from "../renderer/types/Packet";
-import { AppSettingsStoreType } from "./stores/AppSettings";
 
 const handler = {
   send(channel: string, value: unknown) {
@@ -28,7 +26,7 @@ contextBridge.exposeInMainWorld("electron", {
   getAppSettings: () => {
     return ipcRenderer.invoke("get-app-settings");
   },
-  saveAppSettings: (settings: AppSettingsStoreType) => {
+  saveAppSettings: (settings: AppSettingsStore) => {
     ipcRenderer.invoke("save-app-settings", settings);
   },
 });

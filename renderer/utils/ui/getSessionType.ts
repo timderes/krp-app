@@ -1,6 +1,3 @@
-import type KartEvent from "../../types/KartEvent";
-import type SessionType from "../../types/SessionType";
-
 const getSessionType = (type: KartEvent["m_iType"]): SessionType => {
   switch (type) {
     case 0:

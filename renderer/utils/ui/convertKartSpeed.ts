@@ -1,4 +1,3 @@
-import type SpeedUnit from "../../types/SpeedUnit";
 import { MPS_TO_KPH, MPS_TO_MPH } from "../constants";
 
 /**

@@ -1,18 +1,6 @@
 import Store from "electron-store";
-import type TemperatureUnit from "../../renderer/types/TemperatureUnit";
-import type SpeedUnit from "../../renderer/types/SpeedUnit";
 
-export type AppSettingsStoreType = {
-  upd_ip: string; // IP Address for the game data
-  upd_port: number; // UDP Port for the game data
-  game_path: string; // Path to the game installation
-  save_path: string; // Path to save game data (Used to load mods, profiles, replays...)
-  default_driver: string;
-  temperature_unit: TemperatureUnit;
-  speed_unit: SpeedUnit;
-};
-
-export const AppSettingsStore = new Store<AppSettingsStoreType>({
+export const AppSettingsStore = new Store<AppSettingsStore>({
   defaults: {
     upd_ip: "127.0.0.1",
     upd_port: 30001,

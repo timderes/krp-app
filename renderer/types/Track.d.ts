@@ -1,4 +1,5 @@
-type Track = {
+declare type Track = {
+  unique_name: string;
   name: string;
   short_name: string;
   length: number; // Length of the track in meters
@@ -12,5 +13,3 @@ type Track = {
   preview_image: string; // Path to the preview image of the track
   track_map_image: string; // Path to the track map image
 };
-
-export default Track;

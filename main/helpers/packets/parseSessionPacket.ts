@@ -1,6 +1,3 @@
-import type KartSession from "../../../renderer/types/KartSession";
-import type { SessionPacket } from "../../../renderer/types/Packet";
-
 import extractNullTerminatedString from "../utils/extractNullTerminatedString";
 
 // Session Packet contains session information for the karting game

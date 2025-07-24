@@ -1,3 +1,1 @@
-type SpeedUnit = "KPH" | "MPH";
-
-export default SpeedUnit;
+declare type SpeedUnit = "KPH" | "MPH";

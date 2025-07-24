@@ -1,7 +1,5 @@
 // Import types and utilities
 
-import type KartEvent from "../../../renderer/types/KartEvent";
-
 // Helper function to parse the event data bytes and return a KartEvent object
 export const parseEventPacket = (data: Buffer): KartEvent => {
   const event: KartEvent = {

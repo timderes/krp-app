@@ -1,6 +1,3 @@
-import type { DataPacket } from "../../../renderer/types/Packet";
-import type KartData from "../../../renderer/types/KartData";
-
 import extractNullTerminatedString from "../utils/extractNullTerminatedString";
 
 // Data Packet contains the current elapsed session time, the game state and current kart data (fuel, rpm, ...)

@@ -15,5 +15,11 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "exclude": ["node_modules", "renderer/next.config.js", "app", "dist"]
+  "exclude": ["node_modules", "renderer/next.config.js", "app", "dist"],
+  "include": [
+    "renderer/types/**/*.d.ts",
+    "renderer/**/*.ts",
+    "main/types/**/*.d.ts",
+    "main/**/*.ts"
+  ]
 }

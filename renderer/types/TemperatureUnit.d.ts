@@ -1,3 +1,1 @@
-type TemperatureUnit = "CELSIUS" | "FAHRENHEIT" | "KELVIN";
-
-export default TemperatureUnit;
+declare type TemperatureUnit = "CELSIUS" | "FAHRENHEIT" | "KELVIN";

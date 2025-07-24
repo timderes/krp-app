@@ -8,8 +8,6 @@ import {
   IconSun,
 } from "@tabler/icons-react";
 
-import type KartSession from "../../../types/KartSession";
-
 type WeatherIconProps = {
   weatherState: KartSession["m_iConditions"];
 } & IconProps;

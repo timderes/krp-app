@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
-import type { DataPacket } from "../../types/Packet";
 import WeatherIcon from "../../components/ui/icons/WeatherIcon";
 import { Box, Grid, Group, Stack, Text } from "@mantine/core";
-import { SessionPacket } from "../../types/Packet";
-import { LapPacket } from "../../types/Packet";
-import { SplitPacket } from "../../types/Packet";
-import { EventPacket } from "../../types/Packet";
 import getSessionType from "../../utils/ui/getSessionType";
 import { IconClock } from "@tabler/icons-react";
 import convertMillisecondsToTimer from "../../utils/ui/convertMillisecondsToTimer";

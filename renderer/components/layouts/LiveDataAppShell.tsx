@@ -1,4 +1,4 @@
-import { AppShell, rem } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { useHeadroom } from "@mantine/hooks";
 import type { PropsWithChildren } from "react";
 

@@ -1,4 +1,4 @@
-type KartData = {
+declare type KartData = {
   m_iRPM: number; // engine rpm
   m_fCylinderHeadTemperature: number; // degrees Celsius
   m_fWaterTemperature: number; // degrees Celsius
@@ -30,5 +30,3 @@ type KartData = {
   m_aiWheelMaterial: number[]; // material index. 0 = not in contact
   m_fSteerTorque: number; // Nm
 };
-
-export default KartData;

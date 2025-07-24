@@ -1,4 +1,4 @@
-type KartEvent = {
+declare type KartEvent = {
   m_szDriverName: string;
   m_szKartID: string;
   m_szKartName: string;
@@ -18,5 +18,3 @@ type KartEvent = {
   m_fTrackLength: number; // centerline length. meters
   m_iType: number; // 1 = testing; 2 = race; 4 = challenge
 };
-
-export default KartEvent;
