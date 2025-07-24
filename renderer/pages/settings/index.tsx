@@ -14,7 +14,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/router";
-import LayoutWithControls from "../../components/layouts/LayoutWithControls";
+import LayoutWithControls from "@/components/layouts/LayoutWithControls";
 
 const SettingsPage = () => {
   const router = useRouter();

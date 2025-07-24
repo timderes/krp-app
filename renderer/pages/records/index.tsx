@@ -1,5 +1,5 @@
 import { Container, Title } from "@mantine/core";
-import LayoutWithControls from "../../components/layouts/LayoutWithControls";
+import LayoutWithControls from "@/components/layouts/LayoutWithControls";
 
 const RecordsPage = () => {
   return (

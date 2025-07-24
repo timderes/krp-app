@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import WeatherIcon from "../../components/ui/icons/WeatherIcon";
+import WeatherIcon from "@/components/ui/icons/WeatherIcon";
 import { Box, Grid, Group, Stack, Text } from "@mantine/core";
-import getSessionType from "../../utils/ui/getSessionType";
+import getSessionType from "@/utils/ui/getSessionType";
 import { IconClock } from "@tabler/icons-react";
-import convertMillisecondsToTimer from "../../utils/ui/convertMillisecondsToTimer";
-import convertKartSpeed from "../../utils/ui/convertKartSpeed";
-import WaitingForDataOverlay from "../../components/overlays/WaitingForDataOverlay";
+import convertMillisecondsToTimer from "@/utils/ui/convertMillisecondsToTimer";
+import convertKartSpeed from "@/utils/ui/convertKartSpeed";
+import WaitingForDataOverlay from "@/components/overlays/WaitingForDataOverlay";
 
 const LiveDashboard = () => {
   const [udpData, setUdpData] = useState<DataPacket | null>(null);
