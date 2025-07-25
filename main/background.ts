@@ -99,9 +99,9 @@ const handleDataPacket = (b: Buffer) => {
 
   mainWindow.webContents.send("udp-data", {
     data: nullTerminator,
-    state: state,
-    time: time,
-    kartData: kartData,
+    state,
+    time,
+    kartData,
   });
 };
 
@@ -121,7 +121,7 @@ const handleLapPacket = (b: Buffer) => {
 
   mainWindow.webContents.send("udp-data", {
     lap: nullTerminator,
-    kartLap: kartLap,
+    kartLap,
   });
 };
 
@@ -130,15 +130,15 @@ const handleSessionPacket = (b: Buffer) => {
 
   mainWindow.webContents.send("udp-data", {
     sesn: nullTerminator,
-    kartSession: kartSession,
+    kartSession,
   });
 };
 
 const handleSplitPacket = (b: Buffer) => {
-  const { splt, splitData, split } = parseSplitPacket(b);
+  const { splt: nullTerminator, splitData, split } = parseSplitPacket(b);
 
   mainWindow.webContents.send("udp-data", {
-    splt,
+    splt: nullTerminator,
     splitData,
     split,
   });
