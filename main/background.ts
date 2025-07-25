@@ -10,15 +10,13 @@ import {
   parseSessionPacket,
   parseSplitPacket,
 } from "./helpers";
-import * as dgram from "dgram";
 import { AppSettingsStore } from "./stores/AppSettings";
+import {
+  handleCloseUDPSocket,
+  handleUDPMessage,
+} from "./helpers/udp/udpConnection";
 
 const isProd = process.env.NODE_ENV === "production";
-
-const UDP_IP = AppSettingsStore.get("upd_ip");
-const UDP_PORT = AppSettingsStore.get("upd_port");
-
-const udpSocket = dgram.createSocket("udp4");
 
 if (isProd) {
   serve({ directory: "app" });
@@ -47,10 +45,9 @@ let mainWindow: BrowserWindow | null = null;
     mainWindow.webContents.openDevTools();
   }
 
-  // Handles the incoming upd packets from the game
-  udpSocket.on("message", (data) => {
+  handleUDPMessage((data) => {
     if (!mainWindow) {
-      throw new Error("Main window is not initialized. Unable to send data.");
+      console.error("Main window is not initialized. Unable to send data.");
     }
 
     // Extract the null-terminated string and its index from the data packet
@@ -78,19 +75,10 @@ let mainWindow: BrowserWindow | null = null;
         break;
     }
   });
-
-  udpSocket.bind(UDP_PORT, UDP_IP, () => {
-    console.info(`Listening for UDP packets on ${UDP_IP}:${UDP_PORT}`);
-  });
-
-  udpSocket.on("error", (err) => {
-    console.error(`UDP socket error:\n${err.stack}`);
-    udpSocket.close();
-  });
 })();
 
 app.on("window-all-closed", () => {
-  udpSocket.close();
+  handleCloseUDPSocket();
   app.quit();
 });
 
